@@ -26,12 +26,12 @@ function do_search() {
 		    success: function(data) {
 		        var results = $('#autocomplete_results');
 						
-						if (data.length == 0) { return; }
+						if (data.length <= 1) { return; }
 						
 						results.html(''); // clear that shit
 						
 						$(data).each(function(r) {
-							results.append("<li>" + data[r] + "</li>")
+							results.append("<li>" + data[r][0] + " - " + data[r][1] + "</li>")
 						});
 		    },
 				complete: function() {
