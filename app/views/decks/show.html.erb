@@ -1,0 +1,9 @@
+<h2><%= h @deck.name %></h2>
+
+<ul>
+  <% @deck.cards.each do |card| -%>
+  <li>
+    <%= h card.name %>
+  </li>
+  <% end -%>
+</ul>

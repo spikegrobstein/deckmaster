@@ -1,0 +1,9 @@
+<h2>Decks!</h2>
+
+<ul>
+  <% @decks.each do |deck| -%>
+  <li>
+    <%= link_to h(deck.name), deck_path(deck) %>
+  </li>
+  <% end -%>
+</ul>
