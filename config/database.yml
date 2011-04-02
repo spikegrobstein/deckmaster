@@ -5,7 +5,7 @@ development:
   database: deckmaster_dev
   username: deckmaster
   password: deckmaster
-  host: mysql
+  host: mysql.local
   pool: 15
   timeout: 5000
 
