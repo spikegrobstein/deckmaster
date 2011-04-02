@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   
   map.resources :cards
+  map.resources :autocompletions
   
   map.root :controller => :cards
   

@@ -1,0 +1,2 @@
+module AutocompletionsHelper
+end
