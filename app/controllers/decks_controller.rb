@@ -13,7 +13,7 @@ class DecksController < ApplicationController
   end
   
   def create
-    @deck = Deck.new(params)
+    @deck = Deck.new(params[:deck])
     
     begin
       @deck.save!

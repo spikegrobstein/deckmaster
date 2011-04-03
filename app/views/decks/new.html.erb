@@ -1,0 +1,9 @@
+<h2>New Deck</h2>
+
+<% form_for @deck do |form| -%>
+  <%= form.error_messages %>
+  
+  <%= render form %>
+  
+  <%= form.submit "Save &rarr;" %>
+<% end-%>
