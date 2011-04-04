@@ -1,0 +1,24 @@
+body {
+	font: 75% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+}
+
+#cardname {
+	width: 288px;
+	border: 1px solid #666;
+	margin: 0;
+	padding: 2px 5px;
+}
+
+#autocomplete_results {
+	width: 300px;
+	background-color: #eee;
+	margin: 0;
+	padding: 0;
+}
+
+#autocomplete_results li {
+	list-style: none;
+	margin: 0;
+	padding: 5px 2px;
+	border-bottom: 1px solid #ddd;
+}
