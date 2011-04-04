@@ -8,6 +8,7 @@ class CreateCards < ActiveRecord::Migration
       t.integer :power
       t.integer :toughness
       t.string :flavor_text
+      t.string :text
       
       t.integer :expansion_id
       t.integer :rarity_id

@@ -189,7 +189,8 @@ Parallel.map((1..270000).to_a, :in_processes => 20) do |multiverse_id|
     :power => c.power,
     :toughness => c.toughness,
     :flavor_text => c.flavor_text,
-    :multiverse_id => c.multiverse_id
+    :multiverse_id => c.multiverse_id,
+    :text => c.text
   )
   
   rarity = Rarity.find_by_name(c.rarity)

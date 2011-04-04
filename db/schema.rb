@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20110402033221) do
     t.integer  "power"
     t.integer  "toughness"
     t.string   "flavor_text"
+    t.string   "text"
     t.integer  "expansion_id"
     t.integer  "rarity_id"
     t.integer  "artist_id"
