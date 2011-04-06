@@ -5,13 +5,45 @@ var last_search = '';
 var search_in_progress = null;
 var queued_search = null;
 
+function move_selection_up() {
+	var selection = $('#autocomplete_results li.selected');
+	
+	if (selection.length) {
+		// if there's a selection... then let's move it up one... if it can go
+		selection.removeClass('selected');
+		selection.prev().addClass('selected');
+	} else {
+		// there's no selection, let's select the first element.
+		$('#autocomplete_results li').first().addClass('selected');
+	}
+}
+
+function move_selection_down() {
+	var selection = $('#autocomplete_results li.selected');
+	
+	if (selection.length) {
+		// if there's a selection... then let's move it up one... if it can go
+		selection.removeClass('selected');
+		selection.next().addClass('selected');
+	} else {
+		// there's no selection, let's select the first element.
+		$('#autocomplete_results li').first().addClass('selected');
+	}
+}
+
+function make_selection() {
+	var selection = $('#autocomplete_results li.selected');
+	
+	selection.find('.card').click();
+}
+
 $(function() {
 	// build some templates
 	
 	$.template(
 		'search_result', 
 		'<li>\
-			<div>\
+			<div class="card" data-multiverse_id="${multiverse_id}">\
 				<a class="card_name" href="#" rel="/cards/${multiverse_id}">${name}</a>\
 				<span class="casting_cost">${casting_cost}</span>\
 			</div>\
@@ -22,44 +54,94 @@ $(function() {
 		</li>'
 	);
 	
+	$('.card').live('click', function() {
+		var deck_id = 1;
+		var multiverse_id = $(this).data('multiverse_id');
+		
+		$.ajax({
+		    url: '/deck_cards/',
+		    type: 'POST',
+				dataType: 'json',
+		    data: { 
+					deck_card: { deck_id: deck_id, multiverse_id: multiverse_id }
+				},
+		    success: function(data) {
+						console.log('added card! w00t!');
+						console.log(data);
+		    },
+				complete: function() {
+					// pass
+				}
+		});
+		
+		alert('selected: ' + $(this).data('multiverse_id'));
+		return false;
+	});
+	
 	$('#cardname').keydown(function(event) {
 		// real-time searching of cards
 		
+		key_handlers = { 
+			40: "down",
+			38: "up",
+			13: "enter"
+		};
+		
+		if (event.keyCode in key_handlers) {
+			switch (key_handlers[event.keyCode]) {
+				case 'up':
+					move_selection_up();
+					
+					break;
+				case 'down':
+					move_selection_down();
+					
+					break;
+				case 'enter':
+					make_selection();
+					
+					break;
+			}
+			
+			return false;
+		}
+		
 		setTimeout(function() {
 			var search_field = $('#cardname');
+			var results = $('#autocomplete_results');
 
-				if ($(search_field).val() == last_search) { return; }
+			if ($(search_field).val() == last_search) { return; }
+			if ($(search_field).val() == '') { results.html(''); }
 
-				if (search_in_progress) {
-					queued_search = $(search_field).val();
-					return;
-				}
+			if (search_in_progress) {
+				queued_search = $(search_field).val();
+				return;
+			}
 
-				last_search = $(search_field).val();
-				search_in_progress = true;
+			last_search = $(search_field).val();
+			search_in_progress = true;
 
-				$.ajax({
-				    url: '/autocompletions',
-				    type: 'POST',
-						dataType: 'json',
-				    data: { 'cardname': $(search_field).val() },
-				    success: function(data) {
-				        var results = $('#autocomplete_results');
+			$.ajax({
+			    url: '/autocompletions',
+			    type: 'POST',
+					dataType: 'json',
+			    data: { 'cardname': $(search_field).val() },
+			    success: function(data) {
 
-								if (data.length <= 1) { return; }
+							//if (data.length <= 0) { return; }
 
-								results.html(''); // clear that shit
+							results.html(''); // clear that shit
 
-								$.tmpl('search_result', data).appendTo('#autocomplete_results');
-				    },
-						complete: function() {
-							search_in_progress = false;
-							if (queued_search) {
-								$(search_field).keydown();
-								queued_search = null;
-							}
+							$.tmpl('search_result', data).appendTo('#autocomplete_results');
+			    },
+					complete: function() {
+						search_in_progress = false;
+						if (queued_search) {
+							$(search_field).keydown();
+							queued_search = null;
 						}
-				});
+					}
+			});
 		}, 250);
 	});
 });

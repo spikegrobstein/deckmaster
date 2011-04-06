@@ -22,3 +22,7 @@ body {
 	padding: 5px 2px;
 	border-bottom: 1px solid #ddd;
 }
+
+li.selected {
+	background-color: #ffe;
+}

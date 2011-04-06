@@ -74,7 +74,7 @@ class CardLoader
   def get_power_toughness
     power_toughness = self.xml['Details'].xpath('//x:div[@id = "ctl00_ctl00_ctl00_MainContent_SubContent_SubContent_ptRow"]/x:div[@class = "value"]', 'x' => 'http://www.w3.org/1999/xhtml').text.strip
     
-    (self.power, self.toughness) = power_toughness.split(/\s*\/\s*/)
+    (self.power, self.toughness) = power_toughness.strip.split(/\s+\/\s+/)
   end
   
   def get_expansion
@@ -177,7 +177,8 @@ end
 Parallel.map((1..270000).to_a, :in_processes => 20) do |multiverse_id|
   begin
     c = CardLoader.new(multiverse_id)
-  rescue
+  rescue => e
+    puts "Skipping (#{e}): #{multiverse_id}"
     next
   end
   
@@ -188,6 +189,8 @@ Parallel.map((1..270000).to_a, :in_processes => 20) do |multiverse_id|
     :card_type => c.type,
     :power => c.power,
     :toughness => c.toughness,
+    :power_int => c.power.to_i,
+    :toughness_int => c.toughness.to_i,
     :flavor_text => c.flavor_text,
     :multiverse_id => c.multiverse_id,
     :text => c.text

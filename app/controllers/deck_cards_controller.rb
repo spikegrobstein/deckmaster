@@ -1,7 +1,15 @@
 class DeckCardsController < ApplicationController
   
   def create
-    DeckCard.create!(params)
+    logger.debug params
+    
+    @deck_card = DeckCard.create!(params[:deck_card])
+    
+    respond_to do |format|
+      format.json do
+        render :json => @deck_card.deck
+      end
+    end
   end
   
   def destroy

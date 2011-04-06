@@ -5,8 +5,16 @@ class CreateCards < ActiveRecord::Migration
       t.string :casting_cost
       t.integer :converted_casting_cost
       t.string :card_type
-      t.integer :power
-      t.integer :toughness
+      
+      # the power/toughness as displayed on the card
+      # variable p/t would be "*" where sometihng like assquach is "1{1/2}"
+      t.string :power
+      t.string :toughness
+      
+      # for querying power/toughness ranges:
+      t.integer :power_int
+      t.integer :toughness_int
+      
       t.string :flavor_text
       t.string :text
       
