@@ -8,10 +8,6 @@
   
 </ul>
 
-<ul>
-  <% @deck.cards.each do |card| -%>
-  <li>
-    <%= h card.name %>
-  </li>
-  <% end -%>
+<ul id="deck" data-deck_id="<%= @deck.id %>">
+
 </ul>

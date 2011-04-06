@@ -34,7 +34,7 @@ function move_selection_down() {
 function make_selection() {
 	var selection = $('#autocomplete_results li.selected');
 	
-	selection.find('.card').click();
+	selection.click();
 }
 
 $(function() {
@@ -42,8 +42,8 @@ $(function() {
 	
 	$.template(
 		'search_result', 
-		'<li>\
-			<div class="card" data-multiverse_id="${multiverse_id}">\
+		'<li class="card" data-multiverse_id="${multiverse_id}">\
+			<div>\
 				<a class="card_name" href="#" rel="/cards/${multiverse_id}">${name}</a>\
 				<span class="casting_cost">${casting_cost}</span>\
 			</div>\
@@ -54,8 +54,24 @@ $(function() {
 		</li>'
 	);
 	
-	$('.card').live('click', function() {
-		var deck_id = 1;
+	var deck_id = $('#deck').data('deck_id');
+	
+	$.ajax({
+	    url: '/decks/' + deck_id,
+	    type: 'GET',
+			dataType: 'json',
+	    success: function(data) {
+					$('#deck').html(''); // clear that shit
+
+					$.tmpl('search_result', data).appendTo('#deck');
+	    },
+			complete: function() {
+				// pass
+			}
+	});
+	
+	$('.card').live('click', function(event) {
+		var deck_id = $('#deck').data('deck_id');
 		var multiverse_id = $(this).data('multiverse_id');
 		
 		$.ajax({
@@ -66,15 +82,16 @@ $(function() {
 					deck_card: { deck_id: deck_id, multiverse_id: multiverse_id }
 				},
 		    success: function(data) {
-						console.log('added card! w00t!');
-						console.log(data);
+						$('#deck').html(''); // clear that shit
+
+						$.tmpl('search_result', data).appendTo('#deck');
 		    },
 				complete: function() {
 					// pass
 				}
 		});
 		
-		alert('selected: ' + $(this).data('multiverse_id'));
+		//alert('selected: ' + $(this).data('multiverse_id'));
 		return false;
 	});
 	
@@ -98,7 +115,7 @@ $(function() {
 					
 					break;
 				case 'enter':
-					make_selection();
+					make_selection(event.shiftKey);
 					
 					break;
 			}
@@ -110,9 +127,14 @@ $(function() {
 			var search_field = $('#cardname');
 			var results = $('#autocomplete_results');
 
+			// if the field hasn't changed yet or the field is empty, return
 			if ($(search_field).val() == last_search) { return; }
-			if ($(search_field).val() == '') { results.html(''); }
+			if ($(search_field).val() == '') { 
+				results.html('');
+				return;
+			}
 
+			// if a search is in progress, queue the new search up and return
 			if (search_in_progress) {
 				queued_search = $(search_field).val();
 				return;

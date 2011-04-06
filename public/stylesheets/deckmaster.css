@@ -16,7 +16,7 @@ body {
 	padding: 0;
 }
 
-#autocomplete_results li {
+li.card {
 	list-style: none;
 	margin: 0;
 	padding: 5px 2px;
@@ -25,4 +25,11 @@ body {
 
 li.selected {
 	background-color: #ffe;
+}
+
+#deck {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 300px;
 }
