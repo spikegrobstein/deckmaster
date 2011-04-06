@@ -77,6 +77,18 @@ li.card {
 	display: block;
 }
 
+.card .quantity_adjust .increase,
+.card .quantity_adjust .decrease {
+	text-decoration: none;
+	font-weight: normal;
+	color: inherit;
+}
+
+.card .quantity_adjust .increase:hover,
+.card .quantity_adjust .decrease:hover {
+	color: white;
+}
+
 li.selected {
 	background-color: #ffe;
 }

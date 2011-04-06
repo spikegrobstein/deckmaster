@@ -40,6 +40,7 @@ function make_selection() {
 $(function() {
 	// build some templates
 	
+	// cards in search results
 	$.template(
 		'search_result', 
 		'<li class="card" data-multiverse_id="${multiverse_id}">\
@@ -60,8 +61,8 @@ $(function() {
 		'<li class="card">\
       <h3 class="quantity">${quantity}</h3>\
       <div class="quantity_adjust">\
-        <span class="increase">&uarr;</span>\
-        <span class="decrease">&darr;</span>\
+        <a class="increase" href="#">&uarr;</a>\
+        <a class="decrease" href="#">&darr;</a>\
       </div>\
       <div>\
         <div class="first_row">\
@@ -95,6 +96,16 @@ $(function() {
 			complete: function() {
 				// pass
 			}
+	});
+	
+	$('.card .quantity_adjust .decrease').live('click', function() {
+		alert('decreasing for card!');
+		return false;
+	});
+	
+	$('.card .quantity_adjust .increase').live('click', function() {
+		alert('increasing for card!');
+		return false;
 	});
 	
 	$('.card').live('click', function(event) {
