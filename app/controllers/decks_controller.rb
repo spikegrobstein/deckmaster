@@ -6,6 +6,13 @@ class DecksController < ApplicationController
   
   def show
     @deck = Deck.find(params[:id])
+    
+    respond_to do |format|
+      format.html
+      format.json do 
+        render :json => @deck.cards.collect { |c| c.to_json }
+      end
+    end
   end
   
   def new
