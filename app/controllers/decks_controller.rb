@@ -10,7 +10,7 @@ class DecksController < ApplicationController
     respond_to do |format|
       format.html
       format.json do 
-        render :json => @deck.cards.collect { |c| c.to_json }
+        render :json => @deck.to_json
       end
     end
   end

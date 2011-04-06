@@ -54,6 +54,33 @@ $(function() {
 		</li>'
 	);
 	
+	// cards in a deck list (usually inside a li#deck element)
+	$.template(
+		'deck_list_card',
+		'<li class="card">\
+      <h3 class="quantity">${quantity}</h3>\
+      <div class="quantity_adjust">\
+        <span class="increase">&uarr;</span>\
+        <span class="decrease">&darr;</span>\
+      </div>\
+      <div>\
+        <div class="first_row">\
+          <span class="card_name">${name}</span>\
+          <span class="casting_cost">${casting_cost}</span>\
+        </div>\
+        <div class="second_row">\
+          <span class="card_type">${card_type}</span>\
+          <span class="power_toughness">\
+            <span class="power">${power}</span>\
+            /\
+            <span class="toughness">${toughness}</span>\
+          </span>\
+        </div>\
+      </div>\
+      <div style="float: none; clear: both"><!-- --></div>\
+    </li>'
+	)
+	
 	var deck_id = $('#deck').data('deck_id');
 	
 	$.ajax({
@@ -63,7 +90,7 @@ $(function() {
 	    success: function(data) {
 					$('#deck').html(''); // clear that shit
 
-					$.tmpl('search_result', data).appendTo('#deck');
+					$.tmpl('deck_list_card', data['cards']).appendTo('#deck');
 	    },
 			complete: function() {
 				// pass
@@ -84,7 +111,7 @@ $(function() {
 		    success: function(data) {
 						$('#deck').html(''); // clear that shit
 
-						$.tmpl('search_result', data).appendTo('#deck');
+						$.tmpl('deck_list_card', data['cards']).appendTo('#deck');
 		    },
 				complete: function() {
 					// pass

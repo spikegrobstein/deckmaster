@@ -19,8 +19,62 @@ body {
 li.card {
 	list-style: none;
 	margin: 0;
-	padding: 5px 2px;
 	border-bottom: 1px solid #ddd;
+	color: #173840;
+}
+
+.card h3.quantity {
+	background-color: #3F6973;
+	color: #A0F2EA;
+	width: 20px;
+	margin: 0;
+	padding: 10px;
+	text-align: center;
+	font-size: 16px;
+	float: left;
+	display: block;
+}
+
+.card .quantity_adjust {
+	width: 10px;
+	background-color: #173840;
+	color: #A0F2EA;
+	display: block;
+	float: left;
+	margin: 0;
+	margin-right: 5px;
+	padding: 4px 2px;
+	text-align: center;
+}
+
+.card .card_name {
+	font-size: 1.25em;
+	font-weight: bold;
+	display: block;
+	float: left;
+}
+
+.card .casting_cost {
+	text-align: right;
+	display: block;
+}
+
+.card .first_row, .card .second_row {
+	padding-right: 10px;
+	padding-left: 5px;
+}
+
+.card .second_row {
+	margin-top: 5px;
+}
+
+.card .card_type {
+	float: left;
+}
+
+.card .power_toughness {
+	text-align: right;
+	display: block;
 }
 
 li.selected {
