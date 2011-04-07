@@ -6,7 +6,10 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :autocompletions
-  map.resources :deck_cards
+  
+  map.delete_deck_card '/delete_deck_cards', :action => "destroy", :controller => :deck_cards
+  map.resources :deck_cards, :only => :create
+  
   
   map.root :controller => :cards
   
