@@ -8,7 +8,7 @@ class Card < ActiveRecord::Base
   has_many :restrictions
   
   has_many :deck_cards
-  has_many :decks, :through => :deck_cards, :uniq => true
+  has_many :decks, :through => :deck_cards, :group => 'name', :select => '*, count(name) as quantity'
   
   # cards with same casting cost:
   has_many :cards_with_same_casting_cost, :foreign_key => :casting_cost, :primary_key => :casting_cost, :class_name => 'Card'
@@ -17,6 +17,7 @@ class Card < ActiveRecord::Base
   def to_json
     {
         :name => self.name, 
+        :card_id => self.id,
         :multiverse_id => self.multiverse_id,
         :casting_cost => self.casting_cost,
         :card_type => self.card_type,
