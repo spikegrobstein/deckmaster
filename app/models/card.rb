@@ -14,7 +14,7 @@ class Card < ActiveRecord::Base
   has_many :cards_with_same_casting_cost, :foreign_key => :casting_cost, :primary_key => :casting_cost, :class_name => 'Card'
   has_many :cards_with_same_converted_casting_cost, :foreign_key => :converted_casting_cost, :primary_key => :converted_casting_cost, :class_name => 'Card'
 
-  def to_json
+  def as_json(options={})
     {
         :name => self.name, 
         :card_id => self.id,
