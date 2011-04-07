@@ -13,10 +13,16 @@ class DeckCardsController < ApplicationController
   end
   
   def destroy
-    d = DeckCard.find(:first, :conditions => [ "deck_id = :deck_id and card_id = :card_id", params ])
+    d = DeckCard.find(:first, :conditions => [ "deck_id = :deck_id and card_id = :card_id", params[:deck_card] ])
+    
     unless d.nil?
+      deck = d.deck
       d.destroy
+      redirect_to deck_path(deck, :format => :json)
+    else
+      raise ActiveRecord::RecordNotFound
     end
+    
   end
   
 end
