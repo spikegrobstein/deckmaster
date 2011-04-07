@@ -58,7 +58,7 @@ $(function() {
 	// cards in a deck list (usually inside a li#deck element)
 	$.template(
 		'deck_list_card',
-		'<li class="card">\
+		'<li class="card" data-card_id="${card_id}" data-multiverse_id="${multiverse_id}">\
       <h3 class="quantity">${quantity}</h3>\
       <div class="quantity_adjust">\
         <a class="increase" href="#">&uarr;</a>\
@@ -99,7 +99,26 @@ $(function() {
 	});
 	
 	$('.card .quantity_adjust .decrease').live('click', function() {
-		alert('decreasing for card!');
+		var card_id = $(this).parents('.card').data('card_id');
+		var deck_id = $(this).parents('#deck').data('deck_id');
+		
+		$.ajax({
+		    url: '/delete_deck_cards',
+		    type: 'DELETE',
+				dataType: 'json',
+		    data: { 
+					deck_card: { deck_id: deck_id, card_id: card_id }
+				},
+		    success: function(data) {
+						$('#deck').html(''); // clear that shit
+
+						$.tmpl('deck_list_card', data['cards']).appendTo('#deck');
+		    },
+				complete: function() {
+					// pass
+				}
+		});
+		
 		return false;
 	});
 	
