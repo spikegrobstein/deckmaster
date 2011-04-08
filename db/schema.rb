@@ -43,12 +43,11 @@ ActiveRecord::Schema.define(:version => 20110402033221) do
     t.datetime "updated_at"
   end
 
-  create_table "deck_cards", :id => false, :force => true do |t|
+  create_table "deck_cards", :force => true do |t|
     t.integer  "deck_id"
     t.integer  "card_id"
-    t.integer  "id"
-    t.datetime "updated_at"
     t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "decks", :force => true do |t|

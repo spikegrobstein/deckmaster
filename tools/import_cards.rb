@@ -230,24 +230,25 @@ Parallel.map((1..270000).to_a, :in_processes => 20) do |multiverse_id|
 end
 
 puts "Done loading cards... fixing expansions..."
-
 require File.join(File.dirname(__FILE__), 'fix_expansions')
 
 puts "Creating mysql dump..."
 
 c = Rails::Configuration.new
 db_config = c.database_configuration[RAILS_ENV]
-#if db_config['adapter'] != 'mysql'
-#  raise "Unknown database adapter: #{db_config['adapter']}"
-#end
-
-datestamp = DateTime.now.strftime('%Y%m%d_%H%M%s')
-output_filename = "#{File.dirname(__FILE__)}/dumps/#{datestamp}_#{revision}.sql"
-
-unless File.directory?(File.dirname(output_filename))
-  File.mkdir_p(File.dirname(output_filename))
+if db_config['adapter'] != 'mysql'
+  raise "Unknown database adapter: #{db_config['adapter']}"
 end
 
-`mysqldump -u "#{db_config['username']}" --password="#{db_config['password']}" -h "#{db_config['host']}" > "#{output_filename}"`
+revision = `git rev-parse --short HEAD`.chomp
+datestamp = DateTime.now.strftime('%Y%m%d_%H%M%s')
+output_filename = File.join(RAILS_ROOT, 'dumps', "#{datestamp}_#{revision}.sql")
+
+unless File.directory?(File.dirname(output_filename))
+  FileUtils.mkdir_p(File.dirname(output_filename))
+end
+
+`mysqldump -u "#{db_config['username']}" --password="#{db_config['password']}" -h "#{db_config['host']}" "#{db_config['database']}" > "#{output_filename}"`
+
 
 
