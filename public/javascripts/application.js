@@ -123,7 +123,27 @@ $(function() {
 	});
 	
 	$('.card .quantity_adjust .increase').live('click', function() {
-		alert('increasing for card!');
+		var deck_id = $('#deck').data('deck_id');
+		var multiverse_id = $(this).parents('.card').data('multiverse_id');
+		
+		$.ajax({
+		    url: '/deck_cards/',
+		    type: 'POST',
+				dataType: 'json',
+		    data: { 
+					deck_card: { deck_id: deck_id, multiverse_id: multiverse_id }
+				},
+		    success: function(data) {
+						$('#deck').html(''); // clear that shit
+
+						$.tmpl('deck_list_card', data['cards']).appendTo('#deck');
+		    },
+				complete: function() {
+					// pass
+				}
+		});
+		
+		
 		return false;
 	});
 	
