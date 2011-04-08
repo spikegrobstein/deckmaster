@@ -5,7 +5,7 @@ class AutocompletionsController < ApplicationController
     
     respond_to do |format|
       format.json do
-        render :json => cards.collect { |c| c.to_json }
+        render :json => cards.collect { |c| c.as_json }
       end
     end
   end
