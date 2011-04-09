@@ -56,6 +56,22 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 	// functions for working with the selection
 	var result_selection = {
 		
+		// clears the selection
+		clear: function() {
+			$('li', results_element).removeClass('selected');
+		},
+		
+		// sets the selection to the desired offset
+		set: function(offset) {
+			result_selection.clear();
+			
+			console.log($('li', results_element));
+			
+			$('li', results_element)
+				.eq(offset)
+				.addClass('selected');
+		},
+		
 		// finds the selection in the results and returns the element
 		find: function() {
 			return $('li.selected', results_element);
@@ -114,15 +130,17 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 			result_selection.move('down');
 		},
 		
-		// the click callback
-		click: function() {
-			if (click_callback) { click_callback(); }
-			self.select();
-		},
+	}
+	
+	function handle_click(card, event) {
+		click_callback($(card), event);
+		
+		self.select();
 	}
 	
 	$('.card', results_element).live('click', function(event) {
-		click_callback($(this), event);
+		handle_click(this, event);
+		
 	});
 	
 	self.keydown(function(event) {
@@ -148,7 +166,7 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 					
 					break;
 				case 'enter':
-					click_callback(result_selection.find(), null);
+					handle_click(result_selection.find(), null);
 					
 					break;
 				case 'esc':
@@ -192,6 +210,10 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 							results_element.html(''); // clear that shit
 
 							$.tmpl('search_result', data).appendTo(results_element);
+							
+							if (data.length > 0) {
+								result_selection.set(0);
+							}
 			    },
 					complete: function() {
 						search_in_progress = false;
