@@ -61,7 +61,19 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 		
 		// returns which element in the results is selected and returns its 0-based index
 		find_offset: function() {
-			$.error('Not yet implemented');
+			var index = -1;	
+			$('li', results_element).each(function(i, r) {				
+				if ($(r).hasClass('selected')) {
+					index = i;
+					return;
+				}
+			});
+			
+			if (index >= 0) {
+				return index;
+			}
+			
+			$.error("Oh no! Selection not found??");
 		},
 		
 		move: function(direction) {
@@ -86,6 +98,8 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 				// there's no selection, let's select the first element.
 				$('li', results_element).first().addClass('selected');
 			}
+			
+			console.log(result_selection.find_offset());
 		},
 		
 		// move the selection up one
