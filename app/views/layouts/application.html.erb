@@ -5,15 +5,8 @@
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <title>DeckMaster</title>
   
-  <% if RAILS_ENV == 'development' -%>
-  <%# use local JS libs when in dev mode %>
-  <script src="/javascripts/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/javascripts/jquery.tmpl.min.js" type="text/javascript" charset="utf-8"></script>
-  <% else -%>
-  <%# use CDN for code when not in development -%>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
-  <% end -%>
   
   <script src="/javascripts/application.js" type="text/javascript" charset="utf-8"></script>
   
