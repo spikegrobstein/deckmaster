@@ -120,7 +120,10 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 			self.select();
 		},
 	}
-		
+	
+	$('.card', results_element).live('click', function(event) {
+		click_callback($(this), event);
+	});
 	
 	self.keydown(function(event) {
 		// real-time searching of cards
@@ -145,7 +148,7 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 					
 					break;
 				case 'enter':
-					result_selection.click(event.shiftKey);
+					click_callback(result_selection.find(), null);
 					
 					break;
 				case 'esc':
@@ -231,9 +234,9 @@ function(event) {
 
 $(function() {
 	$('#cardname').dm_search($('#autocomplete_results'),
-		function(event) {
+		function(card, event) {
 			var deck_id = $('#deck').data('deck_id');
-			var multiverse_id = $(this).data('multiverse_id');
+			var multiverse_id = card.data('multiverse_id');
 
 			$.ajax({
 			    url: '/deck_cards/',
