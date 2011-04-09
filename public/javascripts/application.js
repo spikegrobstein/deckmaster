@@ -203,8 +203,129 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 
 }});
 
+function(event) {
+	var deck_id = $('#deck').data('deck_id');
+	var multiverse_id = $(this).data('multiverse_id');
+	
+	$.ajax({
+	    url: '/deck_cards/',
+	    type: 'POST',
+			dataType: 'json',
+	    data: { 
+				deck_card: { deck_id: deck_id, multiverse_id: multiverse_id }
+			},
+	    success: function(data) {
+					$('#deck').html(''); // clear that shit
+
+					$.tmpl('deck_list_card', data['cards']).appendTo('#deck');
+	    },
+			complete: function() {
+				// pass
+			}
+	});
+	
+	//alert('selected: ' + $(this).data('multiverse_id'));
+	return false;
+}
+
+
 $(function() {
-	$('#cardname').dm_search($('#autocomplete_results'), function() { console.log('blah'); });
+	$('#cardname').dm_search($('#autocomplete_results'),
+		function(event) {
+			var deck_id = $('#deck').data('deck_id');
+			var multiverse_id = $(this).data('multiverse_id');
+
+			$.ajax({
+			    url: '/deck_cards/',
+			    type: 'POST',
+					dataType: 'json',
+			    data: { 
+						deck_card: { deck_id: deck_id, multiverse_id: multiverse_id }
+					},
+			    success: function(data) {
+							$('#deck').html(''); // clear that shit
+
+							$.tmpl('deck_list_card', data['cards']).appendTo('#deck');
+			    },
+					complete: function() {
+						// pass
+					}
+			});
+
+			//alert('selected: ' + $(this).data('multiverse_id'));
+			return false;
+		}
+	); // end dm_search() function
+	
+	// do deck-related things if there's a deck element on the page
+	if ($('#deck').length) {
+		var deck_id = $('#deck').data('deck_id');
+
+		$.ajax({
+		    url: '/decks/' + deck_id,
+		    type: 'GET',
+				dataType: 'json',
+		    success: function(data) {
+						$('#deck').html(''); // clear that shit
+
+						$.tmpl('deck_list_card', data['cards']).appendTo('#deck');
+		    },
+				complete: function() {
+					// pass
+				}
+		});
+		
+		$('.card .quantity_adjust .decrease').live('click', function() {
+			var card_id = $(this).parents('.card').data('card_id');
+			var deck_id = $(this).parents('#deck').data('deck_id');
+
+			$.ajax({
+			    url: '/delete_deck_cards',
+			    type: 'DELETE',
+					dataType: 'json',
+			    data: { 
+						deck_card: { deck_id: deck_id, card_id: card_id }
+					},
+			    success: function(data) {
+							$('#deck').html(''); // clear that shit
+
+							$.tmpl('deck_list_card', data['cards']).appendTo('#deck');
+			    },
+					complete: function() {
+						// pass
+					}
+			});
+
+			return false;
+		});
+
+		$('.card .quantity_adjust .increase').live('click', function() {
+			var deck_id = $('#deck').data('deck_id');
+			var multiverse_id = $(this).parents('.card').data('multiverse_id');
+
+			$.ajax({
+			    url: '/deck_cards/',
+			    type: 'POST',
+					dataType: 'json',
+			    data: { 
+						deck_card: { deck_id: deck_id, multiverse_id: multiverse_id }
+					},
+			    success: function(data) {
+							$('#deck').html(''); // clear that shit
+
+							$.tmpl('deck_list_card', data['cards']).appendTo('#deck');
+			    },
+					complete: function() {
+						// pass
+					}
+			});
+
+
+			return false;
+		});
+		
+	}
+
 });
 
 /*
