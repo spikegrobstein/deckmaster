@@ -116,7 +116,8 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 		
 		// the click callback
 		click: function() {
-			click_callback();
+			if (click_callback) { click_callback(); }
+			self.select();
 		},
 	}
 		
@@ -161,7 +162,7 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 		
 		search_timeout = setTimeout(function() {
 			// if the field hasn't changed yet or the field is empty, return
-			if (self.val() == this.last_search) { return; }
+			if (self.val() == last_search) { return; }
 			if (self.val() == '') { 
 				results_element.html('');
 				return;
@@ -173,8 +174,6 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 				return;
 			}
 			
-			
-
 			last_search = self.val();
 			search_in_progress = true;
 
@@ -205,7 +204,7 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 }});
 
 $(function() {
-	$('#cardname').dm_search($('#autocomplete_results', function() { console.log('blah'); }));
+	$('#cardname').dm_search($('#autocomplete_results'), function() { console.log('blah'); });
 });
 
 /*
