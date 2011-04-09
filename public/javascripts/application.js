@@ -51,6 +51,8 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 	var search_in_progress = null;
 	var queued_search = null;
 	
+	var search_timeout = null;
+	
 	// functions for working with the selection
 	var result_selection = {
 		
@@ -155,7 +157,9 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 			return false;
 		}
 		
-		setTimeout(function() {
+		if(search_timeout) { clearTimeout(search_timeout); }
+		
+		search_timeout = setTimeout(function() {
 			// if the field hasn't changed yet or the field is empty, return
 			if (self.val() == this.last_search) { return; }
 			if (self.val() == '') { 
@@ -168,6 +172,8 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 				queued_search = self.val();
 				return;
 			}
+			
+			
 
 			last_search = self.val();
 			search_in_progress = true;
@@ -193,7 +199,7 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 						}
 					}
 			});
-		}, 250);
+		}, 200);
 	});
 
 }});
