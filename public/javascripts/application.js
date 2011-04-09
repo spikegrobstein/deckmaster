@@ -1,10 +1,194 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
-var last_search = '';
-var search_in_progress = null;
-var queued_search = null;
+// cards in search results
+$.template(
+	'search_result', 
+	'<li class="card" data-multiverse_id="${multiverse_id}">\
+		<div>\
+			<a class="card_name" href="#" rel="/cards/${multiverse_id}">${name}</a>\
+			<span class="casting_cost">${casting_cost}</span>\
+		</div>\
+		<div>\
+			<span class="type">${card_type}</span>\
+			<span class="power_toughness">${power}/${toughness}\
+		</div>\
+	</li>'
+);
 
+// cards in a deck list
+$.template(
+	'deck_list_card',
+	'<li class="card" data-card_id="${card_id}" data-multiverse_id="${multiverse_id}">\
+    <h3 class="quantity">${quantity}</h3>\
+    <div class="quantity_adjust">\
+      <a class="increase" href="#">&uarr;</a>\
+      <a class="decrease" href="#">&darr;</a>\
+    </div>\
+    <div>\
+      <div class="first_row">\
+        <span class="card_name">${name}</span>\
+        <span class="casting_cost">${casting_cost}</span>\
+      </div>\
+      <div class="second_row">\
+        <span class="card_type">${card_type}</span>\
+        <span class="power_toughness">\
+          <span class="power">${power}</span>\
+          /\
+          <span class="toughness">${toughness}</span>\
+        </span>\
+      </div>\
+    </div>\
+    <div style="float: none; clear: both"><!-- --></div>\
+  </li>'
+)
+
+$.fn.extend({ dm_search: function(results_element, click_callback) {
+	var results_element = $(results_element);
+	var self = $(this);
+	
+	var last_search = '';
+	var search_in_progress = null;
+	var queued_search = null;
+	
+	// functions for working with the selection
+	var result_selection = {
+		
+		// finds the selection in the results and returns the element
+		find: function() {
+			return $('li.selected', results_element);
+		},
+		
+		// returns which element in the results is selected and returns its 0-based index
+		find_offset: function() {
+			$.error('Not yet implemented');
+		},
+		
+		move: function(direction) {
+			var selection = result_selection.find();
+			
+			if (selection.length) {
+				// if there's a selection... then let's move it up one... if it can go
+				if (direction == "up") {
+					if (selection.prev().length) {
+						selection.removeClass('selected');
+						selection.prev().addClass('selected');
+					}
+				} else if (direction == "down") {
+					if (selection.next().length) {
+						selection.removeClass('selected');
+						selection.next().addClass('selected');
+					}
+				} else {
+					$.error('Unknown direction: ' + direction);
+				}
+			} else {
+				// there's no selection, let's select the first element.
+				$('li', results_element).first().addClass('selected');
+			}
+		},
+		
+		// move the selection up one
+		move_up: function() {
+			result_selection.move('up');
+		},
+		
+		// move the selection down one
+		move_down: function() {
+			result_selection.move('down');
+		},
+		
+		// the click callback
+		click: function() {
+			click_callback();
+		},
+	}
+		
+	
+	self.keydown(function(event) {
+		// real-time searching of cards
+		
+		//console.log(event.keyCode);
+		
+		key_handlers = { 
+			40: "down",
+			38: "up",
+			13: "enter",
+			27: "esc"
+		};
+		
+		if (event.keyCode in key_handlers) {
+			switch (key_handlers[event.keyCode]) {
+				case 'up':
+					result_selection.move_up();
+					
+					break;
+				case 'down':
+					result_selection.move_down();
+					
+					break;
+				case 'enter':
+					result_selection.click(event.shiftKey);
+					
+					break;
+				case 'esc':
+					console.log(self.val(''));
+					results_element.html(''); // clear that shit
+					
+					break;
+			}
+			
+			return false;
+		}
+		
+		setTimeout(function() {
+			// if the field hasn't changed yet or the field is empty, return
+			if (self.val() == this.last_search) { return; }
+			if (self.val() == '') { 
+				results_element.html('');
+				return;
+			}
+
+			// if a search is in progress, queue the new search up and return
+			if (search_in_progress) {
+				queued_search = self.val();
+				return;
+			}
+
+			last_search = self.val();
+			search_in_progress = true;
+
+			$.ajax({
+			    url: '/autocompletions',
+			    type: 'POST',
+					dataType: 'json',
+			    data: { 'cardname': self.val() },
+			    success: function(data) {
+
+							//if (data.length <= 0) { return; }
+
+							results_element.html(''); // clear that shit
+
+							$.tmpl('search_result', data).appendTo(results_element);
+			    },
+					complete: function() {
+						search_in_progress = false;
+						if (queued_search) {
+							self.keydown();
+							queued_search = null;
+						}
+					}
+			});
+		}, 250);
+	});
+
+}});
+
+$(function() {
+	$('#cardname').dm_search($('#autocomplete_results', function() { console.log('blah'); }));
+});
+
+/*
 function move_selection_up() {
 	var selection = $('#autocomplete_results li.selected');
 	
@@ -36,7 +220,8 @@ function make_selection() {
 	
 	selection.click();
 }
-
+*/
+/*
 $(function() {
 	// build some templates
 	
@@ -245,3 +430,4 @@ $(function() {
 	});
 });
 
+*/
