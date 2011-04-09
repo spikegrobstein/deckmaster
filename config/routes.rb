@@ -3,6 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :cards
   map.resources :decks do |decks|
     decks.resources :cards
+    decks.resource :draw
   end
   
   map.resources :autocompletions
