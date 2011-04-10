@@ -5,6 +5,8 @@
   <li>
     <%= link_to '+ New Deck', new_deck_path %>
   </li>
+  
+  <% unless @deck.new_record? -%>
   <li>
     <%= link_to 'Add Cards', deck_path(@deck) %>
   </li>
@@ -14,4 +16,5 @@
   <li>
     <%= link_to 'Sample Draw', deck_draw_path(@deck) %>
   </li>
+  <% end -%>
 </ul>
