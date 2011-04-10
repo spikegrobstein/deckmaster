@@ -2,6 +2,19 @@ class Deck < ActiveRecord::Base
   has_many :deck_cards
   has_many :cards, :through => :deck_cards, :order => 'cards.name'
   
+  def duplicate
+    d = self.clone
+    d.name = "#{self.name} duplicate"
+    
+    d.save!
+    
+    self.cards.each do |c|
+      d.cards << c
+    end
+    
+    d.save!
+  end
+  
   def as_json(options={})
     card_list = self.cards.find(:all, :group => 'name', :select => "cards.*, count(name) as quantity")
     
