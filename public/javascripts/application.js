@@ -117,7 +117,6 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 				$('li', results_element).first().addClass('selected');
 			}
 			
-			console.log(result_selection.find_offset());
 		},
 		
 		// move the selection up one
