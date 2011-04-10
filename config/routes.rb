@@ -6,6 +6,8 @@ ActionController::Routing::Routes.draw do |map|
     decks.resource :draw
   end
   
+  map.duplicate_deck '/decks/duplicate/:id', :action => 'duplicate', :controller => :decks
+  
   map.resources :autocompletions
   
   map.delete_deck_card '/delete_deck_cards', :action => "destroy", :controller => :deck_cards

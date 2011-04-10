@@ -32,4 +32,13 @@ class DecksController < ApplicationController
     end
   end
   
+  def duplicate
+    @deck = Deck.find(params[:id])
+    d = @deck.duplicate
+    
+    flash[:notice] = "Deck duplicated! w00t!"
+    
+    redirect_to deck_path(d)
+  end
+  
 end
