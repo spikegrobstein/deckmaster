@@ -1,6 +1,9 @@
+<% content_for :pane_1 do -%>
 <h2>New Deck</h2>
 <%= render :partial => 'nav' %>
+<% end -%>
 
+<% content_for :pane_1 do -%>
 <% form_for @deck do |form| -%>
   <%= form.error_messages %>
   
@@ -8,3 +11,4 @@
   
   <%= form.submit "Save &rarr;" %>
 <% end-%>
+<% end -%>

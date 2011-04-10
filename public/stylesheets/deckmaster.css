@@ -4,13 +4,54 @@ body {
 	color: #E4F2F1;
 }
 
+#pane_1 {
+	width: 33%;
+	margin: 0;
+	padding: 0;
+	overflow: scroll;
+	float: left;
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 66%;
+}
+
+#pane_2 {
+	border-left: 1px solid black;
+	width: 33%;
+	margin: 0;
+	padding: 0;
+	overflow: scroll;
+	float: left;
+	position: absolute;
+	left: 33%;
+	top: 0;
+	bottom: 0;
+	right: 33%;
+}
+
+#pane_3 {
+	border-left: 1px solid black;
+	width: 33%;
+	margin: 0;
+	padding: 0;
+	overflow: scroll;
+	float: left;
+	position: absolute;
+	left: 66%;
+	top: 0;
+	bottom: 0;
+	right: 0;
+}
+
 a {
 	color: #A0F2EA;
 	font-weight: bold;
 }
 
 #cardsearch {
-	width: 300px;
+/*	width: 300px;*/
 	
 }
 
@@ -24,7 +65,7 @@ a {
 }
 
 #autocomplete_results {
-	width: 300px;
+	/*width: 300px;*/
 	background-color: #eee;
 	margin: 0;
 	padding: 0;
@@ -109,10 +150,13 @@ li.selected {
 }
 
 #deck {
-	position: absolute;
-	right: 0px;
-	top: 0px;
-	width: 300px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#deck li {
+	margin: 0;
 }
 
 #deck_list {

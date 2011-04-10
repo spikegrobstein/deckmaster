@@ -1,6 +1,9 @@
+<% content_for :pane_1 do -%>
 <h2>Decks!</h2>
 <%= link_to "+ new", new_deck_path %>
+<% end -%>
 
+<% content_for :pane_2 do -%>
 <table id="deck_list">
   <thead>
     <tr>
@@ -21,3 +24,4 @@
   <% end -%>
   </tbody>
 </table>
+<% end -%>

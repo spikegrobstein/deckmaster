@@ -1,6 +1,9 @@
+<% content_for :pane_1 do -%>
 <h2><%= h @deck.name %></h2>
 <%= render :partial => 'decks/nav' %>
+<% end -%>
 
+<% content_for :pane_2 do -%>
 <form id="cardsearch">
   Search: <input type="text" name="cardname" value="" id="cardname">
 </form>
@@ -9,7 +12,10 @@
 <ul id="autocomplete_results">
   
 </ul>
+<% end -%>
 
+<% content_for :pane_3 do -%>
 <ul id="deck" data-deck_id="<%= @deck.id %>">
 
 </ul>
+<% end -%>
