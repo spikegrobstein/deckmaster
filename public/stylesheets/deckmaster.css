@@ -9,11 +9,18 @@ a {
 	font-weight: bold;
 }
 
+#cardsearch {
+	width: 300px;
+	
+}
+
 #cardname {
-	width: 288px;
 	border: 1px solid #666;
 	margin: 0;
+	margin-left: 10px;
 	padding: 2px 5px;
+	width: 75%;
+	float: right;
 }
 
 #autocomplete_results {
