@@ -15,6 +15,12 @@
 <% end -%>
 
 <% content_for :pane_3 do -%>
+<div id="deck_header">
+  <h3>Your Deck:</h3>
+  <%= link_to 'Name', "#" %> |
+  <%= link_to 'Color', "#" %> |
+  <%= link_to 'casting cost', "#" %>
+</div>
 <ul id="deck" data-deck_id="<%= @deck.id %>">
 
 </ul>

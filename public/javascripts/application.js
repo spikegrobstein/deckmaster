@@ -154,6 +154,15 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 		self.focus();
 	});
 	
+	$('#deck').css({
+		"margin-top": $('#deck_header').innerHeight()
+	});
+	offset = $('#deck_header').offset()
+	$('#deck_header').css({
+		width: $(this).innerWidth(),
+		position: "fixed",
+	});
+	
 	self.keydown(function(event) {
 		// real-time searching of cards
 		
