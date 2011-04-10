@@ -13,6 +13,8 @@ class Deck < ActiveRecord::Base
     end
     
     d.save!
+    
+    return d
   end
   
   def as_json(options={})
