@@ -5,14 +5,20 @@
 $.template(
 	'search_result', 
 	'<li class="card" data-multiverse_id="${multiverse_id}">\
-		<div>\
-			${name}\
-			<span class="casting_cost">${casting_cost}</span>\
-		</div>\
-		<div>\
-			<span class="type">${card_type}</span>\
-			<span class="power_toughness">${power}/${toughness}\
-		</div>\
+		<div class="first_row">\
+      <span class="card_name">${name}</span>\
+      <span class="casting_cost">${casting_cost}</span>\
+    </div>\
+    <div class="second_row">\
+      <span class="card_type">${card_type}</span>\
+      <span class="power_toughness">\
+        <span class="power">${power}</span>\
+        /\
+        <span class="toughness">${toughness}</span>\
+      </span>\
+    </div>\
+  </div>\
+  <div style="float: none; clear: both"><!-- --></div>\
 	</li>'
 );
 
