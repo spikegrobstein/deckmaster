@@ -148,7 +148,10 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 	
 	// wire up the mouse-enter event so the thing gets highlighted when the user mouse-overs
 	$('.card', results_element).live('mouseenter', function(event) {		
-		result_selection.set( $(".card", results_element).index(this) ); 
+		result_selection.set( $(".card", results_element).index(this) );
+		
+		// after highlighting, make sure search field has focus
+		self.focus();
 	});
 	
 	self.keydown(function(event) {
