@@ -1,0 +1,14 @@
+<ul id="subnav">
+  <li>
+    <%= link_to '&larr; All Decks', decks_path %>
+  </li>
+  <li>
+    <%= link_to 'Add Cards', deck_path(@deck) %>
+  </li>
+  <li>
+    <%= link_to '+++ Duplicate', duplicate_deck_path(@deck) %>
+  </li>
+  <li>
+    <%= link_to 'Sample Draw', deck_draw_path(@deck) %>
+  </li>
+</ul>
