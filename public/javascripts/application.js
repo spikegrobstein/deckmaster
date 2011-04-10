@@ -65,7 +65,7 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 		set: function(offset) {
 			result_selection.clear();
 			
-			console.log($('li', results_element));
+			//console.log($('li', results_element));
 			
 			$('li', results_element)
 				.eq(offset)
@@ -137,9 +137,12 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 		self.select();
 	}
 	
-	$('.card', results_element).live('click', function(event) {
-		handle_click(this, event);
-		
+	// wire up the live click event on all the cards
+	$('.card', results_element).live('click', function(event) { handle_click(this, event); });
+	
+	// wire up the mouse-enter event so the thing gets highlighted when the user mouse-overs
+	$('.card', results_element).live('mouseenter', function(event) {		
+		result_selection.set( $(".card", results_element).index(this) ); 
 	});
 	
 	self.keydown(function(event) {
@@ -169,7 +172,7 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 					
 					break;
 				case 'esc':
-					console.log(self.val(''));
+					self.val('');
 					results_element.html(''); // clear that shit
 					
 					break;
