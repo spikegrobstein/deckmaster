@@ -13,12 +13,7 @@
   <link rel="stylesheet" href="/stylesheets/deckmaster.css" type="text/css" media="screen" title="no title" charset="utf-8">
 </head>
 <body onload="">
-  <h1>DeckMaster</h1>
-  <% unless flash[:notice].nil? -%>
-    <div id="flash_notice">
-      <%= flash[:notice] %>
-    </div>
-  <% end -%>
+
   <!--
   <div style="width: 300px" id="color_swatches">
     <div style="background-color: #0B2126">0B2126</div>
@@ -30,6 +25,13 @@
   -->
   
   <div id="pane_1">
+    <h1>DeckMaster</h1>
+    <% unless flash[:notice].nil? -%>
+      <div id="flash_notice">
+        <%= flash[:notice] %>
+      </div>
+    <% end -%>
+    
     <%= yield :pane_1 %>
   </div>
   <div id="pane_2">
