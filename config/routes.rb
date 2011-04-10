@@ -12,7 +12,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :deck_cards, :only => :create
   
   
-  map.root :controller => :cards
+  map.root :controller => :decks
   
   # The priority is based upon order of creation: first created -> highest priority.
 
