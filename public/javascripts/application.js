@@ -233,6 +233,9 @@ $.fn.extend({ dm_search: function(results_element, click_callback) {
 			});
 		}, 200);
 	});
+	
+	// at end of initialization, fire off keydown() event.
+	self.keydown();
 
 }});
 
