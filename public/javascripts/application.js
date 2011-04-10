@@ -6,7 +6,7 @@ $.template(
 	'search_result', 
 	'<li class="card" data-multiverse_id="${multiverse_id}">\
 		<div>\
-			<a class="card_name" href="#" rel="/cards/${multiverse_id}">${name}</a>\
+			${name}\
 			<span class="casting_cost">${casting_cost}</span>\
 		</div>\
 		<div>\

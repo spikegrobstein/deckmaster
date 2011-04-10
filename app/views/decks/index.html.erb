@@ -1,10 +1,23 @@
 <h2>Decks!</h2>
 <%= link_to "+ new", new_deck_path %>
 
-<ul>
+<table id="deck_list">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Cards</th>
+      <th>Created</th>
+      <th>Modified</th>
+    </tr>
+  </thead>
+  <tbody>
   <% @decks.each do |deck| -%>
-  <li>
-    <%= link_to h(deck.name), deck_path(deck) %>
-  </li>
+  <tr>
+    <td><%= link_to h(deck.name), deck_path(deck) %></td>
+    <td><%= deck.cards.count %></td>
+    <td><%= deck.created_at %></td>
+    <td><%= deck.updated_at %></td>
+  </tr>
   <% end -%>
-</ul>
+  </tbody>
+</table>

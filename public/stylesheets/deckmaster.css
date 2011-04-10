@@ -1,5 +1,12 @@
 body {
 	font: 75% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+	background-color: #0B2126;
+	color: #E4F2F1;
+}
+
+a {
+	color: #A0F2EA;
+	font-weight: bold;
 }
 
 #cardname {
@@ -21,6 +28,7 @@ li.card {
 	margin: 0;
 	border-bottom: 1px solid #ddd;
 	color: #173840;
+	background-color: #E4F2F1;
 }
 
 .card h3.quantity {
@@ -98,4 +106,25 @@ li.selected {
 	right: 0px;
 	top: 0px;
 	width: 300px;
+}
+
+#deck_list {
+	background-color: #173840;
+	padding: 5px;
+	margin: 5px;
+	border-collapse: collapse;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	text-align: left;
+	
+}
+
+#deck_list thead {
+	background-color: #3F6973;
+	color: #0B2126;
+}
+
+#deck_list td, #deck_list th {
+	padding: 2px 10px;
 }
