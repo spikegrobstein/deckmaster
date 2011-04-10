@@ -1,5 +1,14 @@
 <h2><%= h @deck.name %></h2>
 
+<ul id="subnav">
+  <li>
+    <%= link_to '+++ Duplicate', duplicate_deck_path(@deck) %>
+  </li>
+  <li>
+    <%= link_to 'Sample Draw', deck_draw_path(@deck) %>
+  </li>
+</ul>
+
 <form id="cardsearch">
   <input type="text" name="cardname" value="" id="cardname">
 </form>

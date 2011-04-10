@@ -1,4 +1,8 @@
 <h2><%= h @deck.name %></h2>
+<h3>Sample Draw</h3>
+<p>
+  Refresh for another.
+</p>
 
 <% @hand.each do |card| -%>
   <%= image_tag "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=#{card.multiverse_id}&type=card"%>
