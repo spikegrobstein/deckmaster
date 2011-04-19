@@ -1,53 +1,6 @@
-// Template Definitions: 
-////////////////////////////////////////////////////////////////////////////////////////
-
-// cards in search results
-$.template(
-	'search_result', 
-	'<li class="card" data-multiverse_id="${multiverse_id}">\
-		<div class="first_row">\
-      <span class="card_name">${name}</span>\
-      <span class="casting_cost">${casting_cost}</span>\
-    </div>\
-    <div class="second_row">\
-      <span class="card_type">${card_type}</span>\
-      <span class="power_toughness">\
-        <span class="power">${power}</span>\
-        /\
-        <span class="toughness">${toughness}</span>\
-      </span>\
-    </div>\
-  </div>\
-  <div style="float: none; clear: both"><!-- --></div>\
-	</li>'
-);
-
-// cards in a deck list
-$.template(
-	'deck_list_card',
-	'<li class="card" data-card_id="${card_id}" data-multiverse_id="${multiverse_id}">\
-    <h3 class="quantity">${quantity}</h3>\
-    <div class="quantity_adjust">\
-      <a class="increase" href="#">&uarr;</a>\
-      <a class="decrease" href="#">&darr;</a>\
-    </div>\
-    <div>\
-      <div class="first_row">\
-        <span class="card_name">${name}</span>\
-        <span class="casting_cost">${casting_cost}</span>\
-      </div>\
-      <div class="second_row">\
-        <span class="card_type">${card_type}</span>\
-        <span class="power_toughness">\
-          <span class="power">${power}</span>\
-          /\
-          <span class="toughness">${toughness}</span>\
-        </span>\
-      </div>\
-    </div>\
-    <div style="float: none; clear: both"><!-- --></div>\
-  </li>'
-)
+// first, let's load some templates.
+$.get('/javascripts/templates/deck_list_card.tmpl.html', function(d) { $.template('deck_list_card', d); });
+$.get('/javascripts/templates/search_result.tmpl.html', function(d) { $.template('search_result', d); });
 
 // Main plugin: 
 ////////////////////////////////////////////////////////////////////////////////////////
